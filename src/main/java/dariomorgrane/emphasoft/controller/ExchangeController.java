@@ -30,9 +30,8 @@ public class ExchangeController {
         User user = userService.mapToModel(request);
         ExchangeOperation exchangeOperation = exchangeOperationService.mapToModel(request);
         user.getExchangeOperations().add(exchangeOperation);
-        user = userService.save(user);
-        //return userService.mapToJson(user);
-        return new ResponseJson();
+        exchangeOperation = exchangeOperationService.save(exchangeOperation);
+        return exchangeOperationService.mapToJson(exchangeOperation);
     }
 
 }
