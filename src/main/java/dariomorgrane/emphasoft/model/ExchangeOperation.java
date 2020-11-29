@@ -1,6 +1,7 @@
 package dariomorgrane.emphasoft.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "exchange_operations")
@@ -75,5 +76,35 @@ public class ExchangeOperation {
 
     public void setAmountInUSD(long amountInUSD) {
         this.amountInUSD = amountInUSD;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ExchangeOperation)) return false;
+        ExchangeOperation that = (ExchangeOperation) o;
+        return id == that.id &&
+                amountInOriginalCurrency == that.amountInOriginalCurrency &&
+                amountInTargetCurrency == that.amountInTargetCurrency &&
+                amountInUSD == that.amountInUSD &&
+                Objects.equals(originalCurrency, that.originalCurrency) &&
+                Objects.equals(targetCurrency, that.targetCurrency);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, originalCurrency, targetCurrency, amountInOriginalCurrency, amountInTargetCurrency, amountInUSD);
+    }
+
+    @Override
+    public String toString() {
+        return "ExchangeOperation {" +
+                "id= " + id +
+                ", originalCurrency= '" + originalCurrency + '\'' +
+                ", targetCurrency= '" + targetCurrency + '\'' +
+                ", amountInOriginalCurrency= " + amountInOriginalCurrency +
+                ", amountInTargetCurrency= " + amountInTargetCurrency +
+                ", amountInUSD= " + amountInUSD +
+                '}';
     }
 }
