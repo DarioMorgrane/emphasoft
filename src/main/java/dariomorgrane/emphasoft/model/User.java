@@ -11,7 +11,7 @@ public class User {
     private long id;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ExchangeRequest> exchangeRequests;
+    private List<ExchangeOperation> exchangeOperations;
 
     public long getId() {
         return id;
@@ -21,11 +21,11 @@ public class User {
         this.id = id;
     }
 
-    public List<ExchangeRequest> getExchangeRequests() {
-        return exchangeRequests;
+    public List<ExchangeOperation> getExchangeOperations() {
+        return exchangeOperations;
     }
 
-    public void setExchangeRequests(List<ExchangeRequest> exchangeRequests) {
-        this.exchangeRequests = exchangeRequests;
+    public void setExchangeOperations(List<ExchangeOperation> exchangeOperations) {
+        this.exchangeOperations = exchangeOperations;
     }
 }
