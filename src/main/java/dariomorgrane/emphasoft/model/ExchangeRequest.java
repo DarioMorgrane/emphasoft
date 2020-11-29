@@ -3,8 +3,8 @@ package dariomorgrane.emphasoft.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "exchange_operations")
-public class ExchangeOperation {
+@Table(name = "exchange_requests")
+public class ExchangeRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,7 +1,7 @@
 package dariomorgrane.emphasoft.repository;
 
-import dariomorgrane.emphasoft.model.ExchangeOperation;
+import dariomorgrane.emphasoft.model.ExchangeRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ExchangeOperationRepository extends JpaRepository<ExchangeOperation, Long> {
+public interface ExchangeRequestRepository extends JpaRepository<ExchangeRequest, Long> {
 }
