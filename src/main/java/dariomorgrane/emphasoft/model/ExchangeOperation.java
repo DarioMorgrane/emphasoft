@@ -27,7 +27,7 @@ public class ExchangeOperation {
     private double amountInUSD;
 
     @ManyToOne
-    @JoinColumn(name = "users_id")
+    @JoinColumn(name = "users_id", nullable = false)
     private User user;
 
     public long getId() {
@@ -76,6 +76,14 @@ public class ExchangeOperation {
 
     public void setAmountInUSD(double amountInUSD) {
         this.amountInUSD = amountInUSD;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

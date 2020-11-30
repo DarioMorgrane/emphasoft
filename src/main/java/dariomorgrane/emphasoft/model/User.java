@@ -1,8 +1,10 @@
 package dariomorgrane.emphasoft.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -11,8 +13,9 @@ public class User {
     @Id
     private long id;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ExchangeOperation> exchangeOperations;
+    private Set<ExchangeOperation> exchangeOperations;
 
     public long getId() {
         return id;
@@ -22,11 +25,11 @@ public class User {
         this.id = id;
     }
 
-    public List<ExchangeOperation> getExchangeOperations() {
+    public Set<ExchangeOperation> getExchangeOperations() {
         return exchangeOperations;
     }
 
-    public void setExchangeOperations(List<ExchangeOperation> exchangeOperations) {
+    public void setExchangeOperations(Set<ExchangeOperation> exchangeOperations) {
         this.exchangeOperations = exchangeOperations;
     }
 

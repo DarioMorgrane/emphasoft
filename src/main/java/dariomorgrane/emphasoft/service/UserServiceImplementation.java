@@ -2,20 +2,22 @@ package dariomorgrane.emphasoft.service;
 
 import dariomorgrane.emphasoft.dto.RequestJson;
 import dariomorgrane.emphasoft.model.User;
+import dariomorgrane.emphasoft.repository.UserRepository;
 import dariomorgrane.emphasoft.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 @Component
 public class UserServiceImplementation implements UserService {
 
-    private final JpaRepository<User, Long> repository;
+    private final UserRepository repository;
 
     @Autowired
-    public UserServiceImplementation(JpaRepository<User, Long> repository) {
+    public UserServiceImplementation(UserRepository repository) {
         this.repository = repository;
     }
 
@@ -29,12 +31,16 @@ public class UserServiceImplementation implements UserService {
         return repository.findById(request.getUserId())
                 .orElseGet(() -> {
                     User user = new User();
-                    user.setExchangeOperations(new ArrayList<>());
+                    user.setExchangeOperations(new HashSet<>());
                     user.setId(request.getUserId());
                     return user;
                 });
     }
 
+    @Override
+    public List<User> getAllFilteredBySingleRequest(double limit) {
+        return repository.getAllFilteredBySingleRequest(limit);
+    }
 
 
 }

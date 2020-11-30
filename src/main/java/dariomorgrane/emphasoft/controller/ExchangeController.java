@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 @RestController
 @RequestMapping("/exchange")
 public class ExchangeController {
@@ -28,10 +32,14 @@ public class ExchangeController {
     @PostMapping
     public ResponseJson handleExchange(@RequestBody RequestJson request) {
         User user = userService.mapToModel(request);
-        ExchangeOperation exchangeOperation = exchangeOperationService.mapToModel(request);
-        user.getExchangeOperations().add(exchangeOperation);
-        exchangeOperation = exchangeOperationService.save(exchangeOperation);
-        return exchangeOperationService.mapToJson(exchangeOperation);
+        ExchangeOperation newExchangeOperation = exchangeOperationService.mapToModel(request);
+        Set<ExchangeOperation> setBeforeSave = new HashSet<>(user.getExchangeOperations());
+        user.getExchangeOperations().add(newExchangeOperation);
+        newExchangeOperation.setUser(user);
+        user = userService.save(user);
+        Set<ExchangeOperation> setAfterSave = user.getExchangeOperations();
+        setAfterSave.removeAll(setBeforeSave);
+        return exchangeOperationService.mapToJson(new ArrayList<>(setAfterSave).get(0));
     }
 
 }

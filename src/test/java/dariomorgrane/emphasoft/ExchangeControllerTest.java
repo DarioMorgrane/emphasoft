@@ -14,7 +14,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ExchangeControllerTest {
 
     @LocalServerPort
@@ -33,17 +32,18 @@ public class ExchangeControllerTest {
     }
 
     @Test
-    @Order(1)
     void postRequestShouldMatchExpectedResult() throws JsonProcessingException {
-        RequestJson requestJson = new RequestJson(1, 100, "RUB", "RUB");
-        ResponseJson responseJson = new ResponseJson(1, 100);
+        for (int count = 1; count <= 5; count++) {
+            RequestJson requestJson = new RequestJson(1, count * 100, "RUB", "RUB");
+            ResponseJson responseJson = new ResponseJson(count, count * 100);
 
-        String requestBody = objectMapper.writeValueAsString(requestJson);
-        String expectedResponseBody = objectMapper.writeValueAsString(responseJson);
+            String requestBody = objectMapper.writeValueAsString(requestJson);
+            String expectedResponseBody = objectMapper.writeValueAsString(responseJson);
 
-        HttpEntity<String> request = new HttpEntity<String>(requestBody, headers);
-        String responseBody = restTemplate.postForObject("http://localhost:" + port + "/exchange", request, String.class);
-        Assertions.assertEquals(expectedResponseBody, responseBody);
+            HttpEntity<String> request = new HttpEntity<String>(requestBody, headers);
+            String responseBody = restTemplate.postForObject("http://localhost:" + port + "/exchange", request, String.class);
+            Assertions.assertEquals(expectedResponseBody, responseBody);
+        }
     }
 
 }
