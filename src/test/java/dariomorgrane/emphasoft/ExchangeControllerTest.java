@@ -3,6 +3,7 @@ package dariomorgrane.emphasoft;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dariomorgrane.emphasoft.dto.RequestJson;
+import dariomorgrane.emphasoft.dto.ResponseJson;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,8 @@ public class ExchangeControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
     private static final HttpHeaders headers = new HttpHeaders();
 
     @BeforeAll
@@ -31,18 +34,16 @@ public class ExchangeControllerTest {
 
     @Test
     @Order(1)
-    void postRequestShouldCorrectResponse() throws JsonProcessingException {
-        RequestJson requestJson = new RequestJson();
-        requestJson.setAmountInOriginalCurrency(100);
-        requestJson.setOriginalCurrency("USD");
-        requestJson.setTargetCurrency("UAH");
-        requestJson.setUserId(1);
-        String expectedResult = "{\"requestId\":1,\"amountInTargetCurrency\":100}";
-        ObjectMapper objectMapper = new ObjectMapper();
+    void postRequestShouldMatchExpectedResult() throws JsonProcessingException {
+        RequestJson requestJson = new RequestJson(1, 100, "RUB", "RUB");
+        ResponseJson responseJson = new ResponseJson(1, 100);
+
         String requestBody = objectMapper.writeValueAsString(requestJson);
+        String expectedResponseBody = objectMapper.writeValueAsString(responseJson);
+
         HttpEntity<String> request = new HttpEntity<String>(requestBody, headers);
         String responseBody = restTemplate.postForObject("http://localhost:" + port + "/exchange", request, String.class);
-        Assertions.assertEquals(expectedResult, responseBody);
+        Assertions.assertEquals(expectedResponseBody, responseBody);
     }
 
 }

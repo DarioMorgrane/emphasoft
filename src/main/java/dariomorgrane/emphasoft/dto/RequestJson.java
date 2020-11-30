@@ -2,13 +2,20 @@ package dariomorgrane.emphasoft.dto;
 
 public class RequestJson {
 
+    private long userId;
+    private double amountInOriginalCurrency;
+    private String originalCurrency;
+    private String targetCurrency;
+
     public RequestJson() {
     }
 
-    private long userId;
-    private long amountInOriginalCurrency;
-    private String originalCurrency;
-    private String targetCurrency;
+    public RequestJson(long userId, double amountInOriginalCurrency, String originalCurrency, String targetCurrency) {
+        this.userId = userId;
+        this.amountInOriginalCurrency = amountInOriginalCurrency;
+        this.originalCurrency = originalCurrency;
+        this.targetCurrency = targetCurrency;
+    }
 
     public long getUserId() {
         return userId;
@@ -18,11 +25,11 @@ public class RequestJson {
         this.userId = userId;
     }
 
-    public long getAmountInOriginalCurrency() {
+    public double getAmountInOriginalCurrency() {
         return amountInOriginalCurrency;
     }
 
-    public void setAmountInOriginalCurrency(long amountInOriginalCurrency) {
+    public void setAmountInOriginalCurrency(double amountInOriginalCurrency) {
         this.amountInOriginalCurrency = amountInOriginalCurrency;
     }
 

@@ -18,13 +18,13 @@ public class ExchangeOperation {
     private String targetCurrency;
 
     @Column(nullable = false, name = "amount_in_original_currency")
-    private long amountInOriginalCurrency;
+    private double amountInOriginalCurrency;
 
     @Column(nullable = false, name = "amount_in_target_currency")
-    private long amountInTargetCurrency;
+    private double amountInTargetCurrency;
 
     @Column(nullable = false, name = "amount_in_usd")
-    private long amountInUSD;
+    private double amountInUSD;
 
     @ManyToOne
     @JoinColumn(name = "users_id")
@@ -54,27 +54,27 @@ public class ExchangeOperation {
         this.targetCurrency = targetCurrency;
     }
 
-    public long getAmountInOriginalCurrency() {
+    public double getAmountInOriginalCurrency() {
         return amountInOriginalCurrency;
     }
 
-    public void setAmountInOriginalCurrency(long amountInOriginalCurrency) {
+    public void setAmountInOriginalCurrency(double amountInOriginalCurrency) {
         this.amountInOriginalCurrency = amountInOriginalCurrency;
     }
 
-    public long getAmountInTargetCurrency() {
+    public double getAmountInTargetCurrency() {
         return amountInTargetCurrency;
     }
 
-    public void setAmountInTargetCurrency(long amountInTargetCurrency) {
+    public void setAmountInTargetCurrency(double amountInTargetCurrency) {
         this.amountInTargetCurrency = amountInTargetCurrency;
     }
 
-    public long getAmountInUSD() {
+    public double getAmountInUSD() {
         return amountInUSD;
     }
 
-    public void setAmountInUSD(long amountInUSD) {
+    public void setAmountInUSD(double amountInUSD) {
         this.amountInUSD = amountInUSD;
     }
 

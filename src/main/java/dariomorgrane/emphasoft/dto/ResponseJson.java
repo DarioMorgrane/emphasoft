@@ -6,9 +6,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class ResponseJson {
 
     private long requestId;
-    private long amountInTargetCurrency;
+    private double amountInTargetCurrency;
 
     public ResponseJson() {
+    }
+
+    public ResponseJson(long requestId, double amountInTargetCurrency) {
+        this.requestId = requestId;
+        this.amountInTargetCurrency = amountInTargetCurrency;
     }
 
     public long getRequestId() {
@@ -19,11 +24,11 @@ public class ResponseJson {
         this.requestId = requestId;
     }
 
-    public long getAmountInTargetCurrency() {
+    public double getAmountInTargetCurrency() {
         return amountInTargetCurrency;
     }
 
-    public void setAmountInTargetCurrency(long amountInTargetCurrency) {
+    public void setAmountInTargetCurrency(double amountInTargetCurrency) {
         this.amountInTargetCurrency = amountInTargetCurrency;
     }
 }
