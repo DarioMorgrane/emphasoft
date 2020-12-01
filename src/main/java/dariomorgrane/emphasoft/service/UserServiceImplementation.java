@@ -42,5 +42,10 @@ public class UserServiceImplementation implements UserService {
         return repository.getAllFilteredBySingleRequest(limit);
     }
 
+    @Override
+    public List<User> getAllFilteredByCommonRequests(double limit) {
+        return repository.getAllFilteredByCommonRequests(limit);
+    }
+
 
 }

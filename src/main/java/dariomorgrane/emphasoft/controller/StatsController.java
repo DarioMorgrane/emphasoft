@@ -1,15 +1,15 @@
 package dariomorgrane.emphasoft.controller;
 
-import dariomorgrane.emphasoft.model.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dariomorgrane.emphasoft.service.interfaces.ExchangeOperationService;
 import dariomorgrane.emphasoft.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/stats")
@@ -17,6 +17,7 @@ public class StatsController {
 
     private final UserService userService;
     private final ExchangeOperationService exchangeOperationService;
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     public StatsController(UserService userService, ExchangeOperationService exchangeOperationService) {
@@ -24,9 +25,21 @@ public class StatsController {
         this.exchangeOperationService = exchangeOperationService;
     }
 
-    @GetMapping("/users")
-    public List<User> handleSingleRequestStats(@RequestParam(name = "type") String type, @RequestParam(name = "limit") double limit) {
-        return userService.getAllFilteredBySingleRequest(limit);
+    @GetMapping()
+    public ResponseEntity<String> handleStatsRequest(@RequestParam(name = "type") String type,
+                                                     @RequestParam(name = "limit", required = false, defaultValue = "0") double limit) throws Exception {
+        String responseBody;
+        if (type.equals("single")) {
+            responseBody = mapper.writeValueAsString(userService.getAllFilteredBySingleRequest(limit));
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        } else if (type.equals("common")) {
+            responseBody = mapper.writeValueAsString(userService.getAllFilteredByCommonRequests(limit));
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        } else if (type.equals("rating")) {
+            return new ResponseEntity<>("responseBody", HttpStatus.OK);
+        } else {
+            throw new Exception("");
+        }
     }
 
 }

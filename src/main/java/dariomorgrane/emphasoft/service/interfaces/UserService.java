@@ -12,4 +12,6 @@ public interface UserService {
     User mapToModel(RequestJson request);
 
     List<User> getAllFilteredBySingleRequest(double limit);
+
+    List<User> getAllFilteredByCommonRequests(double limit);
 }

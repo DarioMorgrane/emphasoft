@@ -22,8 +22,15 @@ public class EmphasoftApplication {
 		String nl = "\n";
 		Statement statement = connection.createStatement();
 
-        String query1 = "Select * from exchange_operations;";
-        printResultSet(query1, statement);
+        String query1 = "select\n" +
+				"        user0_.id \n" +
+				"    from\n" +
+				"        users user0_ \n" +
+				"    inner join\n" +
+				"        exchange_operations exchangeop1_ \n" +
+				"            on user0_.id=exchangeop1_.users_id group by user0_.id having sum(exchangeop1_.amount_in_usd) > 156679 \n" +
+				"    ";
+		printResultSet(query1, statement);
 		connection.close();*/
 	}
 
@@ -47,7 +54,4 @@ public class EmphasoftApplication {
 		System.out.println();
 	}
 
-
-
 }
-

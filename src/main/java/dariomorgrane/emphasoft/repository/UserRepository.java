@@ -12,4 +12,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT DISTINCT(u) FROM User AS u JOIN u.exchangeOperations AS e WHERE e.amountInUSD > :limit")
     List<User> getAllFilteredBySingleRequest(@Param("limit") double limit);
 
+    @Query("SELECT u FROM User AS u JOIN u.exchangeOperations AS e GROUP BY u HAVING SUM(e.amountInUSD) > :limit")
+    List<User> getAllFilteredByCommonRequests(@Param("limit") double limit);
 }
