@@ -2,13 +2,13 @@ package dariomorgrane.emphasoft.dto;
 
 import java.util.Map;
 
-public class OutsideApiExchangeResult {
+public class ExternalApiExchangeResult {
 
     private String base;
     private String date;
     private Map<String, Object> rates;
 
-    public OutsideApiExchangeResult() {
+    public ExternalApiExchangeResult() {
     }
 
     public String getBase() {
