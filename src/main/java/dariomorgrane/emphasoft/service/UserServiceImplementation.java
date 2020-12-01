@@ -5,13 +5,12 @@ import dariomorgrane.emphasoft.model.User;
 import dariomorgrane.emphasoft.repository.UserRepository;
 import dariomorgrane.emphasoft.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-@Component
+@Service
 public class UserServiceImplementation implements UserService {
 
     private final UserRepository repository;
@@ -46,6 +45,5 @@ public class UserServiceImplementation implements UserService {
     public List<User> getAllFilteredByCommonRequests(double limit) {
         return repository.getAllFilteredByCommonRequests(limit);
     }
-
 
 }

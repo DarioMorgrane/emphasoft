@@ -2,13 +2,14 @@ package dariomorgrane.emphasoft.dto;
 
 import java.util.Map;
 
-public class ExchangeResult{
-    public ExchangeResult() {
-    }
+public class OutsideApiExchangeResult {
 
     private String base;
     private String date;
     private Map<String, Object> rates;
+
+    public OutsideApiExchangeResult() {
+    }
 
     public String getBase() {
         return base;

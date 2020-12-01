@@ -14,7 +14,7 @@ public class User {
     private long id;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<ExchangeOperation> exchangeOperations;
 
     public long getId() {

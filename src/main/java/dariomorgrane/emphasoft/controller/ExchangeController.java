@@ -33,6 +33,7 @@ public class ExchangeController {
     public ResponseJson handleExchange(@RequestBody RequestJson request) {
         User user = userService.mapToModel(request);
         ExchangeOperation newExchangeOperation = exchangeOperationService.mapToModel(request);
+        // todo newExchangeOperation.fillUpWithActualRates;
         Set<ExchangeOperation> setBeforeSave = new HashSet<>(user.getExchangeOperations());
         user.getExchangeOperations().add(newExchangeOperation);
         newExchangeOperation.setUser(user);

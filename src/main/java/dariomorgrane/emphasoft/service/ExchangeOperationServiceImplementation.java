@@ -1,6 +1,7 @@
 package dariomorgrane.emphasoft.service;
 
-import dariomorgrane.emphasoft.dto.ExchangeResult;
+import dariomorgrane.emphasoft.dto.OutsideApiExchangeResult;
+import dariomorgrane.emphasoft.dto.RatingJson;
 import dariomorgrane.emphasoft.dto.RequestJson;
 import dariomorgrane.emphasoft.dto.ResponseJson;
 import dariomorgrane.emphasoft.model.ExchangeOperation;
@@ -8,12 +9,12 @@ import dariomorgrane.emphasoft.repository.ExchangeOperationRepository;
 import dariomorgrane.emphasoft.service.interfaces.ExchangeOperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Map;
+import java.util.List;
 
-@Component
+@Service
 public class ExchangeOperationServiceImplementation implements ExchangeOperationService {
 
     private final ExchangeOperationRepository repository;
@@ -28,16 +29,16 @@ public class ExchangeOperationServiceImplementation implements ExchangeOperation
     }
 
     @Override
-    public ExchangeOperation save(ExchangeOperation exchangeOperation) {
-        return repository.save(exchangeOperation);
-    }
-
-    @Override
     public ResponseJson mapToJson(ExchangeOperation exchangeOperation) {
         ResponseJson responseJson = new ResponseJson();
         responseJson.setRequestId(exchangeOperation.getId());
         responseJson.setAmountInTargetCurrency(exchangeOperation.getAmountInTargetCurrency());
         return responseJson;
+    }
+
+    @Override
+    public List<RatingJson> getRatingOfExchangeDirection() {
+        return repository.getRatingOfExchangeDirection();
     }
 
     @Override
@@ -53,13 +54,14 @@ public class ExchangeOperationServiceImplementation implements ExchangeOperation
         exchangeOperation.setAmountInUSD(amountInUSD);
         return exchangeOperation;
     }
-//todo exception handling
+
+    //todo exception handling
     private double defineAmountInTargetCurrency(String originalCurrency, String targetCurrency, double amountInOriginalCurrency) {
         String requestUrl = currencyConverterApiUrlTemplate
                 .replaceAll("targetCurrency", targetCurrency)
                 .replaceAll("originalCurrency", originalCurrency);
-        ExchangeResult exchangeResult = restTemplate.getForObject(requestUrl, ExchangeResult.class);
-        Double quotation = (Double) (exchangeResult.getRates().get(targetCurrency));
+        OutsideApiExchangeResult outsideApiExchangeResult = restTemplate.getForObject(requestUrl, OutsideApiExchangeResult.class);
+        Double quotation = (Double) (outsideApiExchangeResult.getRates().get(targetCurrency));
         return quotation * amountInOriginalCurrency;
     }
 

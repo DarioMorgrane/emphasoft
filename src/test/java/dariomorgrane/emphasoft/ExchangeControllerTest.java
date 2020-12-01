@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dariomorgrane.emphasoft.dto.RequestJson;
 import dariomorgrane.emphasoft.dto.ResponseJson;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -16,15 +18,12 @@ import org.springframework.http.MediaType;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ExchangeControllerTest {
 
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final HttpHeaders headers = new HttpHeaders();
     @LocalServerPort
     private int port;
-
     @Autowired
     private TestRestTemplate restTemplate;
-
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-
-    private static final HttpHeaders headers = new HttpHeaders();
 
     @BeforeAll
     static void setUpHeaders() {

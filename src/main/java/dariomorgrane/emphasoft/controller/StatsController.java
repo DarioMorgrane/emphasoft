@@ -1,6 +1,7 @@
 package dariomorgrane.emphasoft.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dariomorgrane.emphasoft.exception.UnknownValueOfTypeParameterException;
 import dariomorgrane.emphasoft.service.interfaces.ExchangeOperationService;
 import dariomorgrane.emphasoft.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class StatsController {
         this.exchangeOperationService = exchangeOperationService;
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<String> handleStatsRequest(@RequestParam(name = "type") String type,
                                                      @RequestParam(name = "limit", required = false, defaultValue = "0") double limit) throws Exception {
         String responseBody;
@@ -36,9 +37,10 @@ public class StatsController {
             responseBody = mapper.writeValueAsString(userService.getAllFilteredByCommonRequests(limit));
             return new ResponseEntity<>(responseBody, HttpStatus.OK);
         } else if (type.equals("rating")) {
-            return new ResponseEntity<>("responseBody", HttpStatus.OK);
+            responseBody = mapper.writeValueAsString(exchangeOperationService.getRatingOfExchangeDirection());
+            return new ResponseEntity<>(responseBody, HttpStatus.OK);
         } else {
-            throw new Exception("");
+            throw new UnknownValueOfTypeParameterException(type);
         }
     }
 

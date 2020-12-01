@@ -2,7 +2,7 @@ package dariomorgrane.emphasoft.dto;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({ "requestId", "amountInTargetCurrency"})
+@JsonPropertyOrder({"requestId", "amountInTargetCurrency"})
 public class ResponseJson {
 
     private long requestId;
