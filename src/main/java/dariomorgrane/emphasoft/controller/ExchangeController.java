@@ -34,7 +34,7 @@ public class ExchangeController {
 
     @PostMapping
     public ResponseJson handleExchange(@RequestBody RequestJson request) {
-        LOGGER.info("Received JSON message mapped to object: " + request);
+        LOGGER.info("Received to POST /exchange JSON message mapped to object: " + request);
         User user = userService.mapToModel(request);
         ExchangeOperation newExchangeOperation = exchangeOperationService.mapToModel(request);
         Set<ExchangeOperation> setBeforeSave = new HashSet<>(user.getExchangeOperations());

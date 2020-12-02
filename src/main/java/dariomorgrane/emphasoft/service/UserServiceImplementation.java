@@ -21,7 +21,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public User save(User user) { //todo delete me
+    public User save(User user) {
         return repository.save(user);
     }
 

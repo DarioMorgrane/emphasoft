@@ -48,4 +48,14 @@ public class RequestJson {
     public void setTargetCurrency(String targetCurrency) {
         this.targetCurrency = targetCurrency;
     }
+
+    @Override
+    public String toString() {
+        return "RequestJson{ " +
+                "userId= " + userId +
+                ", amountInOriginalCurrency= " + amountInOriginalCurrency +
+                ", originalCurrency= ' " + originalCurrency + '\'' +
+                ", targetCurrency= '" + targetCurrency + '\'' +
+                '}';
+    }
 }

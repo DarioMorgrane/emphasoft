@@ -33,7 +33,7 @@ public class StatsController {
     @GetMapping
     public ResponseEntity<String> handleStatsRequest(@RequestParam(name = "type") String type,
                                                      @RequestParam(name = "limit", required = false, defaultValue = "0") double limit) throws Exception {
-        LOGGER.info("Received request to GET /stats has type - " + type + "and limit - " + limit);
+        LOGGER.info("Received request to GET /stats has type - " + type + " and limit - " + limit);
         String responseBody;
         if (type.equals("single")) {
             responseBody = mapper.writeValueAsString(userService.getAllFilteredBySingleRequest(limit));

@@ -115,7 +115,7 @@ public class StatsControllerTest {
 
     @Test
     @Order(5)
-    void requestToStatsRating() { //todo rename me
+    void requestToStatsRatingShouldReturnExpectedRating() {
         String responseBody = restTemplate.getForObject("http://localhost:" + port + "/stats?type=rating", String.class);
         Assertions.assertEquals(expectedResponseBodyForExchangeOperations, responseBody);
     }
