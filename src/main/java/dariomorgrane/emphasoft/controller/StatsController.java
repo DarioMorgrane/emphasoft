@@ -2,7 +2,6 @@ package dariomorgrane.emphasoft.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dariomorgrane.emphasoft.exception.UnknownValueOfTypeParameterException;
-import dariomorgrane.emphasoft.service.ExchangeOperationServiceImplementation;
 import dariomorgrane.emphasoft.service.interfaces.ExchangeOperationService;
 import dariomorgrane.emphasoft.service.interfaces.UserService;
 import org.slf4j.Logger;
