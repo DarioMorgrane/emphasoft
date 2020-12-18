@@ -13,12 +13,14 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ActiveProfiles("test")
 public class StatsControllerTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -57,7 +59,7 @@ public class StatsControllerTest {
 
     @Test
     @Order(1)
-    void setPreviouslyDataForUsers() throws JsonProcessingException {
+    void setPreviouslyDataForUsersLimit() throws JsonProcessingException {
         for (long count = 1; count <= 8; count++) {
             double amount;
             if (count < 4) {

@@ -73,8 +73,9 @@ public class ExchangeOperationServiceImplementation implements ExchangeOperation
             ExternalApiExchangeResult externalApiExchangeResult = restTemplate.getForObject(requestUrl, ExternalApiExchangeResult.class);
             quotation = (Double) (Objects.requireNonNull(externalApiExchangeResult).getRates().get(targetCurrency));
         } catch (Exception e) {
-            LOGGER.error("Error caused by external exchange api " + e.getMessage());
-            throw new ExternalApiExchangeException(e.getMessage());
+            String exceptionExplanation = "Error caused by external exchange api: " + e.getMessage();
+            LOGGER.error(exceptionExplanation);
+            throw new ExternalApiExchangeException(exceptionExplanation);
         }
         return quotation * amountInOriginalCurrency;
     }

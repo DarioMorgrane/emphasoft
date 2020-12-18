@@ -1,7 +1,7 @@
-package dariomorgrane.emphasoft.controller;
+package dariomorgrane.emphasoft.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dariomorgrane.emphasoft.exception.UnknownValueOfTypeParameterException;
+import dariomorgrane.emphasoft.exception.WebLayerException;
 import dariomorgrane.emphasoft.service.interfaces.ExchangeOperationService;
 import dariomorgrane.emphasoft.service.interfaces.UserService;
 import org.slf4j.Logger;
@@ -47,8 +47,9 @@ public class StatsController {
             LOGGER.info("Response json is - " + responseBody);
             return new ResponseEntity<>(responseBody, HttpStatus.OK);
         } else {
-            LOGGER.error("Received unsupported value of \"type\" parameter - " + type);
-            throw new UnknownValueOfTypeParameterException(type);
+            String exceptionExplanation = "Received unsupported value of \"type\" parameter - " + type;
+            LOGGER.warn(exceptionExplanation);
+            throw new WebLayerException(exceptionExplanation);
         }
     }
 

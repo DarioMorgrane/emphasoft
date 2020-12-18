@@ -1,4 +1,4 @@
-package dariomorgrane.emphasoft.controller;
+package dariomorgrane.emphasoft.web;
 
 import dariomorgrane.emphasoft.dto.RequestJson;
 import dariomorgrane.emphasoft.dto.ResponseJson;
@@ -13,10 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/exchange")
@@ -34,18 +30,15 @@ public class ExchangeController {
 
     @PostMapping
     public ResponseJson handleExchange(@RequestBody RequestJson request) {
-        LOGGER.info("Received to POST /exchange JSON message mapped to object: " + request);
-        User user = userService.mapToModel(request);
+        LOGGER.info("JSON message received to POST /exchange  mapped to object: " + request);
+
+        User user = userService.findByIdOrGetNew(request.getUserId());
         ExchangeOperation newExchangeOperation = exchangeOperationService.mapToModel(request);
-        Set<ExchangeOperation> setBeforeSave = new HashSet<>(user.getExchangeOperations());
-        user.getExchangeOperations().add(newExchangeOperation);
-        newExchangeOperation.setUser(user);
-        user = userService.save(user);
-        Set<ExchangeOperation> setAfterSave = user.getExchangeOperations();
-        setAfterSave.removeAll(setBeforeSave);
-        newExchangeOperation = new ArrayList<>(setAfterSave).get(0);
-        LOGGER.info("Saved ExchangeOperation object is: " + newExchangeOperation);
-        return exchangeOperationService.mapToJson(newExchangeOperation);
+        user.addExchangeOperation(newExchangeOperation);
+        ExchangeOperation addedExchangeOperation = userService.saveAndGetAddedExchangeOperation(user);
+
+        LOGGER.info("Saved ExchangeOperation object is: " + addedExchangeOperation);
+        return exchangeOperationService.mapToJson(addedExchangeOperation);
     }
 
 }

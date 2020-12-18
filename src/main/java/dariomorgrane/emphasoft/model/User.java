@@ -33,6 +33,11 @@ public class User {
         this.exchangeOperations = exchangeOperations;
     }
 
+    public void addExchangeOperation(ExchangeOperation newExchangeOperation) {
+        newExchangeOperation.setUser(this);
+        exchangeOperations.add(newExchangeOperation);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,4 +57,5 @@ public class User {
                 "id= " + id +
                 '}';
     }
+
 }

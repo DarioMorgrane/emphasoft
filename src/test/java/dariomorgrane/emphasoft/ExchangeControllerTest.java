@@ -19,11 +19,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.SQLException;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ExchangeControllerTest implements ApplicationContextAware {
+@ActiveProfiles("test")
+public class ExchangeControllerTest {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final HttpHeaders headers = new HttpHeaders();
@@ -31,12 +33,11 @@ public class ExchangeControllerTest implements ApplicationContextAware {
     private int port;
     @Autowired
     private TestRestTemplate restTemplate;
-    @Autowired
-    private ApplicationContext context;
+    private JdbcTemplate jdbcTemplate;
 
-    @Override
-    public void setApplicationContext(ApplicationContext context) throws BeansException {
-        this.context = context;
+    @Autowired
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @BeforeAll
@@ -57,7 +58,6 @@ public class ExchangeControllerTest implements ApplicationContextAware {
             String responseBody = restTemplate.postForObject("http://localhost:" + port + "/exchange", request, String.class);
             Assertions.assertEquals(expectedResponseBody, responseBody);
         }
-        JdbcTemplate jdbcTemplate = context.getBean("jdbcTemplate", JdbcTemplate.class);
         jdbcTemplate.execute("DELETE FROM exchange_operations;");
         jdbcTemplate.execute("DELETE FROM users;");
         DataSourceUtils.releaseConnection(jdbcTemplate.getDataSource().getConnection(), jdbcTemplate.getDataSource());

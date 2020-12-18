@@ -54,7 +54,7 @@ public class RequestJson {
         return "RequestJson{ " +
                 "userId= " + userId +
                 ", amountInOriginalCurrency= " + amountInOriginalCurrency +
-                ", originalCurrency= ' " + originalCurrency + '\'' +
+                ", originalCurrency= '" + originalCurrency + '\'' +
                 ", targetCurrency= '" + targetCurrency + '\'' +
                 '}';
     }
